@@ -25,6 +25,7 @@ namespace Test_Server
 
 			private readonly int id;
 			private NetworkStream stream;
+			private Packet recieveData;
 			private byte[] recieveBuffer;
 
 			public TCP(int _id)
@@ -39,11 +40,33 @@ namespace Test_Server
 				socket.SendBufferSize = dataBufferSize;
 
 				stream = socket.GetStream();
+
+				recieveData = new Packet();
 				recieveBuffer = new byte[dataBufferSize];
 				stream.BeginRead(recieveBuffer, 0, dataBufferSize, RecieveCallback, null);
 
 				//TODO: Send welcome packet
+				ServerSend.Welcome(id, "Welcome to the Server ");
 			}
+
+			public void SendData(Packet _packet)
+			{
+				try
+				{
+					if (socket != null)
+					{
+						stream.BeginWrite(_packet.ToArray(), 0, _packet.Length(), null, null);
+					}
+				}
+				catch (Exception _ex)
+				{
+					Console.WriteLine($"Error sending data to player {id} via TCP: {_ex}");
+				}
+
+			}
+
+		
+
 
 			private void RecieveCallback(IAsyncResult _result)
 			{
@@ -60,6 +83,8 @@ namespace Test_Server
 					Array.Copy(recieveBuffer, _data, _byteLength);
 
 					//TODO: handle data
+					recieveData.Reset(HandleData(_data));
+					
 					stream.BeginRead(recieveBuffer, 0, dataBufferSize, RecieveCallback, null);
 
 				}
@@ -69,9 +94,49 @@ namespace Test_Server
 				}
 
 
+
 			}
+			private bool HandleData(byte[] _data)
+			{
+				int _packetLength = 0;
+
+				recieveData.SetBytes(_data);
+				if (recieveData.UnreadLength() >= 4)
+				{
+					_packetLength = recieveData.ReadInt();
+					if (_packetLength <= 0)
+						return true;
+				}
+
+				while (_packetLength > 0 && _packetLength <= recieveData.UnreadLength())
+				{
+					byte[] _packetBytes = recieveData.ReadBytes(_packetLength);
+					ThreadManager.ExecuteOnMainThread(() =>
+					{
+						using (Packet _packet = new Packet(_packetBytes))
+						{
+							int _packetId = _packet.ReadInt();
+							Server.packetHandlers[_packetId](id, _packet);
+						}
+					});
+
+					_packetLength = 0;
+					if (recieveData.UnreadLength() >= 4)
+					{
+						_packetLength = recieveData.ReadInt();
+						if (_packetLength <= 0)
+							return true;
+					}
 
 
+				}
+				if (_packetLength <= 1)
+				{
+					return true;
+				}
+
+				return false;
+			}
 
 		}
 
