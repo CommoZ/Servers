@@ -32,13 +32,14 @@ namespace Test_Server
 		{
 			//int _clientIdCheck = _packet.ReadInt();
 			//string _username = _packet.ReadString();
+			int _clientId = _packet.ReadInt();
 			string _msg = _packet.ReadString();
 
-			Console.WriteLine($"Message from client Reads: {_msg}");
+			Console.WriteLine($"Message from client id: {_clientId} Reads: {_msg}");
 			
 			
 			//Sending bac to all players
-			ServerSend.SendMessagePublic(_msg);
+			ServerSend.SendMessagePublic(_clientId, _msg);
 	
 		}
 
