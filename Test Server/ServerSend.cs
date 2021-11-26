@@ -90,16 +90,17 @@ namespace Test_Server
 			}
 		}
 
-		public static void SendMessagePublic(int _toClient, string _msg)
+		public static void SendMessagePublic(int _toClient, string _username, string _msg)
 		{
 			using (Packet _packet = new Packet((int)ServerPackets.publicMessageSent))
 			{
-				_packet.Write(_msg);
 				_packet.Write(_toClient);
+				_packet.Write(_username);
+				_packet.Write(_msg);
 				
 				//Actually for this purpose i dont need send back the _toClient id
 				
-				Console.WriteLine($"Sending back this msg to everyone: {_msg} Except for :{_toClient}");
+				Console.WriteLine($"Sending back this msg to everyone: {_msg} Except for :{_username}");
 				SendTCPDataToAll(_toClient ,_packet);
 			}
 		}
