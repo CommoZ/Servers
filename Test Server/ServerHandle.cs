@@ -26,5 +26,21 @@ namespace Test_Server
 
 			Console.WriteLine($"Received packet via UDP. Contains Message: { _msg }");
 		}
+
+		//To Receive and send back message to the server
+		public static void MessageReceived(int _fromClient, Packet _packet)
+		{
+			//int _clientIdCheck = _packet.ReadInt();
+			//string _username = _packet.ReadString();
+			string _msg = _packet.ReadString();
+
+			Console.WriteLine($"Message from client Reads: {_msg}");
+			
+			
+			//Sending bac to all players
+			ServerSend.SendMessagePublic(_msg);
+	
+		}
+
 	}
 }

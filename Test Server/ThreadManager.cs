@@ -6,6 +6,8 @@ namespace Test_Server
 {
 	class ThreadManager
 	{
+        //This shit also dont touch
+
         private static readonly List<Action> executeOnMainThread = new List<Action>();
         private static readonly List<Action> executeCopiedOnMainThread = new List<Action>();
         private static bool actionToExecuteOnMainThread = false;

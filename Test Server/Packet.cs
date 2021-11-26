@@ -4,18 +4,22 @@ using System.Text;
 
 namespace Test_Server
 {
+    //Other than the type of packets you can send dont touch anything u monkey
+
     /// <summary>Sent from server to client.</summary>
     public enum ServerPackets
     {
         welcome = 1,
-        udpTest
+        udpTest,
+        publicMessageSent
     }
 
     /// <summary>Sent from client to server.</summary>
     public enum ClientPackets
     {
         welcomeReceived = 1,
-        udpTestReceived
+        udpTestReceived,
+        publicMessageReceived
     }
 
     public class Packet : IDisposable
