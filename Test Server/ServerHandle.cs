@@ -12,13 +12,32 @@ namespace Test_Server
 			string _username = _packet.ReadString();
 
 			Console.WriteLine($"{Server.clients[_fromClient].tcp.socket.Client.RemoteEndPoint} connected successfully and is now a player {_fromClient}.");
-			if(_fromClient != _clientIdCheck)
+			if (_fromClient != _clientIdCheck)
 			{
 				Console.WriteLine($"Player \"{_username}\" (ID: {_fromClient}) has assumed the wrong client ID ({_clientIdCheck})!");
 			}
 			//TODO sent player into game
 		}
 
+		//Old stuff that didnt work
+		//public static void DisconnectPlayer(int _fromClient, Packet _packet)
+		//{
+		//	int _clientId = _packet.ReadInt();
+		//	string _playFabId = _packet.ReadString();
+		//	string _username = _packet.ReadString();
+
+		//	//Wait this will jsut work on my quit wtf
+		//	Console.WriteLine($"Disconnecting player of clientID: {_fromClient} from active players");
+		//	Server.clients.Remove(_fromClient);
+
+		//	for (int i = 1; i < Server.MaxPlayers; i++)
+		//	{
+		//		if (i > _fromClient)
+		//			Server.clients[i].id--;
+		//		//Console.WriteLine($"After disconnecting player of id: {_fromClient} from active players");
+		//		//Console.Write($"this is the servers ids left{Server.clients[i].id}");
+		//	}
+		//}
 
 		public static void UDPTestReceived(int _fromClient, Packet _packet)
 		{

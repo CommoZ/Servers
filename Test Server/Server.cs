@@ -119,17 +119,20 @@ namespace Test_Server
 
 		private static void InitializeServerData()
 		{
-			for (int i = 1; i <= MaxPlayers; i++)
-			{
-				clients.Add(i, new Client(i));
-			}
+		
 
 			packetHandlers = new Dictionary<int, PacketHandler>()
 			{
 				{(int)ClientPackets.welcomeReceived, ServerHandle.WelcomeRecieved },
 				{(int)ClientPackets.udpTestReceived, ServerHandle.UDPTestReceived },
+				//{(int)ClientPackets.disconnectRecieved, ServerHandle.DisconnectPlayer },
 				{(int)ClientPackets.publicMessageReceived, ServerHandle.MessageReceived }
 			};
+
+			for (int i = 1; i <= MaxPlayers; i++)
+			{
+				clients.Add(i, new Client(i));
+			}
 			Console.WriteLine("Initialized Packets. ");
 		}
 

@@ -16,6 +16,7 @@ namespace Test_Server
 		public Client(int _clientId)
 		{
 			id = _clientId;
+
 			tcp = new TCP(id);
 			udp = new UDP(id);
 		}
@@ -76,8 +77,10 @@ namespace Test_Server
 				{
 					int _byteLength = stream.EndRead(_result);
 					if (_byteLength <= 0)
-					{ 
+					{
 						//TODO: disconnect
+						Server.clients[id].Disconnect();
+
 						return; 
 					}
 
@@ -93,6 +96,7 @@ namespace Test_Server
 				catch(Exception _ex)
 				{
 					Console.WriteLine($"Error receiving TCP data: {_ex}");
+					Server.clients[id].Disconnect();
 				}
 
 
@@ -140,6 +144,15 @@ namespace Test_Server
 				return false;
 			}
 
+			public void Disconnect()
+			{
+				socket.Close();
+				stream = null;
+				recieveData = null;
+				recieveBuffer = null;
+				socket = null;
+			}
+
 		}
 	
 		public class UDP
@@ -178,7 +191,19 @@ namespace Test_Server
 					}
 				});
 			}
+
+			public void Disconnect()
+			{
+				endPoint = null;
+			}
 		}
 
+
+		private void Disconnect()
+		{
+			Console.WriteLine($"{tcp.socket.Client.RemoteEndPoint} has disconnected.");
+			tcp.Disconnect();
+			udp.Disconnect();
+		}
 	}
 }

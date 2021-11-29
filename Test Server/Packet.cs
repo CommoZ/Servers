@@ -18,6 +18,7 @@ namespace Test_Server
     public enum ClientPackets
     {
         welcomeReceived = 1,
+        //disconnectRecieved,
         udpTestReceived,
         publicMessageReceived
     }
