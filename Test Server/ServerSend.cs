@@ -90,11 +90,12 @@ namespace Test_Server
 			}
 		}
 
-		public static void SendMessagePublic(int _toClient, string _username, string _msg)
+		public static void SendMessagePublic(int _toClient, string _playFabID, string _username, string _msg)
 		{
 			using (Packet _packet = new Packet((int)ServerPackets.publicMessageSent))
 			{
 				_packet.Write(_toClient);
+				_packet.Write(_playFabID);
 				_packet.Write(_username);
 				_packet.Write(_msg);
 				

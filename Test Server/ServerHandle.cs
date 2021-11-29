@@ -33,6 +33,7 @@ namespace Test_Server
 			//int _clientIdCheck = _packet.ReadInt();
 			//string _username = _packet.ReadString();
 			int _clientId = _packet.ReadInt();
+			string _playFabID = _packet.ReadString();
 			string _username = _packet.ReadString();
 			string _msg = _packet.ReadString();
 
@@ -41,7 +42,7 @@ namespace Test_Server
 			
 			
 			//Sending bac to all players
-			ServerSend.SendMessagePublic(_clientId, _username, _msg);
+			ServerSend.SendMessagePublic(_clientId, _playFabID, _username, _msg);
 	
 		}
 
