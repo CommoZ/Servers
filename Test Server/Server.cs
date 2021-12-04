@@ -16,10 +16,18 @@ namespace Test_Server
 		private static TcpListener tcpListener;
 		private static UdpClient udpListener;
 
+
+		//public static List<string> playFabUsernameArray;
+		//public static List<string> playFabIDArray;
+
+		public static string[] playFabUsernameArray = new string[50];
+		public static string[] playFabIDArray = new string[50];
+
 		public static void Start(int _maxPlayers, int _port)
 		{
 			MaxPlayers = _maxPlayers;
 			Port = _port;
+
 
 			Console.WriteLine("Starting Server");
 
@@ -126,7 +134,9 @@ namespace Test_Server
 				{(int)ClientPackets.welcomeReceived, ServerHandle.WelcomeRecieved },
 				{(int)ClientPackets.udpTestReceived, ServerHandle.UDPTestReceived },
 				//{(int)ClientPackets.disconnectRecieved, ServerHandle.DisconnectPlayer },
-				{(int)ClientPackets.publicMessageReceived, ServerHandle.MessageReceived }
+				
+				{(int)ClientPackets.publicMessageReceived, ServerHandle.MessageReceived },
+				{(int)ClientPackets.playFabIdSent, ServerHandle.ClientPlayFabIDRecieved }
 			};
 
 			for (int i = 1; i <= MaxPlayers; i++)

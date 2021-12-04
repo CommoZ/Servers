@@ -39,6 +39,16 @@ namespace Test_Server
 			}
 		}
 
+		private static void SendTCPDataToOne(int _toClient, Packet _packet)
+		{
+			_packet.WriteLength();
+			for (int i = 1; i < Server.MaxPlayers; i++)
+			{
+				if (i == _toClient)
+					Server.clients[i].tcp.SendData(_packet);
+			}
+		}
+
 		private static void SendUDPData(int _toClient, Packet _packet)
 		{
 			_packet.WriteLength();

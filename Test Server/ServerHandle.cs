@@ -10,8 +10,10 @@ namespace Test_Server
 		{
 			int _clientIdCheck = _packet.ReadInt();
 			string _username = _packet.ReadString();
+			//string _playFabId = _packet.ReadString();
 
 			Console.WriteLine($"{Server.clients[_fromClient].tcp.socket.Client.RemoteEndPoint} connected successfully and is now a player {_fromClient}.");
+			//Console.WriteLine($"\n Clients PlayFabID {_playFabId}");
 			if (_fromClient != _clientIdCheck)
 			{
 				Console.WriteLine($"Player \"{_username}\" (ID: {_fromClient}) has assumed the wrong client ID ({_clientIdCheck})!");
@@ -63,6 +65,24 @@ namespace Test_Server
 			//Sending bac to all players
 			ServerSend.SendMessagePublic(_clientId, _playFabID, _username, _msg);
 	
+		}
+
+		public static void ClientPlayFabIDRecieved(int _fromClient, Packet _packet)
+		{
+			int _clientId = _packet.ReadInt();
+			string _playFabID = _packet.ReadString();
+			string _playFabUsername = _packet.ReadString();
+
+			//This tells me which player is online and in which spot they are online in
+			//Right after that they will set the array and use it 
+			//Remember Limit is at 50 players
+			Server.playFabIDArray[_clientId] = _playFabID;
+			Server.playFabUsernameArray[_clientId] = _playFabUsername;
+
+			Console.WriteLine($"Players ClientID { _clientId }" +
+				$"\nPlayers Current Server ID { _fromClient }" +
+				$"\nPlayFab ID: { _playFabID } " +
+				$"\nPlayFab Username: { _playFabUsername }");
 		}
 
 	}

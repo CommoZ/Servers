@@ -20,7 +20,8 @@ namespace Test_Server
         welcomeReceived = 1,
         //disconnectRecieved,
         udpTestReceived,
-        publicMessageReceived
+        publicMessageReceived,
+        playFabIdSent
     }
 
     public class Packet : IDisposable

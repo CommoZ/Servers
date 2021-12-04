@@ -13,6 +13,7 @@ namespace Test_Server
 		public TCP tcp;
 		public UDP udp;
 
+
 		public Client(int _clientId)
 		{
 			id = _clientId;
@@ -151,6 +152,16 @@ namespace Test_Server
 				recieveData = null;
 				recieveBuffer = null;
 				socket = null;
+
+				Console.WriteLine($"Before this id spot had { Server.playFabIDArray[id] }" +
+				$"\nWith the username of { Server.playFabUsernameArray[id] }");
+
+				Server.playFabIDArray[id] = null;
+				Server.playFabUsernameArray[id] = null;
+
+				Console.WriteLine($"Now this id spot has { Server.playFabIDArray[id] }" +
+				$"\nWith the username of { Server.playFabUsernameArray[id] }");
+
 			}
 
 		}
