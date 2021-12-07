@@ -85,5 +85,39 @@ namespace Test_Server
 				$"\nPlayFab Username: { _playFabUsername }");
 		}
 
+		public static void ClientAddFriendRequest(int _fromClient, Packet _packet)
+		{
+			int _clientId = _packet.ReadInt();
+			string _playFabIDToAdd = _packet.ReadString();
+
+			Console.WriteLine($"Recieved Friend Request from {Server.playFabUsernameArray[_clientId]}" +
+				$"\nPlayerID to add {_playFabIDToAdd} ");
+
+			//wow i cant believe i wrote wrong code for 2 hours
+			for (int i = 0; i <= Server.MaxPlayers; i++)
+			{
+				if (Server.playFabIDArray[i] == null)
+					continue;
+				else
+					Console.WriteLine($"This slot has an ID and it is {Server.playFabIDArray[i]}");
+				if (_playFabIDToAdd == Server.playFabIDArray[i])
+				{
+					//TODO: send a friend request
+					ServerSend.SendFriendRequest(i, _clientId);
+
+
+					Console.WriteLine($"Player of ID {_playFabIDToAdd} has been sent request");
+					break;
+				}
+				//Console.WriteLine($"Current ID in for loop: {Server.playFabIDArray[i]}");
+			}
+			Console.WriteLine($"Player of ID {_playFabIDToAdd} is not online");
+
+
+		}
+
+
+
+
 	}
 }

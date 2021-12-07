@@ -153,14 +153,14 @@ namespace Test_Server
 				recieveBuffer = null;
 				socket = null;
 
-				Console.WriteLine($"Before this id spot had { Server.playFabIDArray[id] }" +
-				$"\nWith the username of { Server.playFabUsernameArray[id] }");
+				Console.WriteLine($"{ Server.playFabIDArray[id] }" +
+				$" With the Username :{ Server.playFabUsernameArray[id] } Has disconnected" +
+				$"\nCurrent Players in Server is at { Server.CurrentPlayers }");
 
 				Server.playFabIDArray[id] = null;
 				Server.playFabUsernameArray[id] = null;
 
-				Console.WriteLine($"Now this id spot has { Server.playFabIDArray[id] }" +
-				$"\nWith the username of { Server.playFabUsernameArray[id] }");
+			
 
 			}
 
@@ -213,6 +213,7 @@ namespace Test_Server
 		private void Disconnect()
 		{
 			Console.WriteLine($"{tcp.socket.Client.RemoteEndPoint} has disconnected.");
+			Server.CurrentPlayers--;
 			tcp.Disconnect();
 			udp.Disconnect();
 		}

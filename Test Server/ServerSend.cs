@@ -116,6 +116,19 @@ namespace Test_Server
 			}
 		}
 
+		public static void SendFriendRequest(int _toClient, int _fromClient)
+		{
+			using (Packet _packet = new Packet((int)ServerPackets.friendRequestSendTo))
+			{
+				_packet.Write(Server.playFabIDArray[_fromClient]);          // this is to send which player its from
+				_packet.Write(Server.playFabUsernameArray[_fromClient]);	// this is just his username
+				
+
+				
+				SendTCPDataToOne(_toClient, _packet);
+			}
+		}
+
 		#endregion
 	}
 }

@@ -9,6 +9,7 @@ namespace Test_Server
 	class Server
 	{
 		public static int MaxPlayers { get; private set; }
+		public static int CurrentPlayers { get; set; }
 		public static int Port { get; private set; }
 		public static Dictionary<int, Client> clients = new Dictionary<int, Client>();
 		public delegate void PacketHandler(int _fromClient, Packet _packet);
@@ -58,6 +59,7 @@ namespace Test_Server
 			{
 				if (clients[i].tcp.socket == null)
 				{
+					CurrentPlayers++;
 					clients[i].tcp.Connect(_client);
 					return;
 				}
@@ -124,7 +126,6 @@ namespace Test_Server
 
 		}
 
-
 		private static void InitializeServerData()
 		{
 		
@@ -134,9 +135,9 @@ namespace Test_Server
 				{(int)ClientPackets.welcomeReceived, ServerHandle.WelcomeRecieved },
 				{(int)ClientPackets.udpTestReceived, ServerHandle.UDPTestReceived },
 				//{(int)ClientPackets.disconnectRecieved, ServerHandle.DisconnectPlayer },
-				
 				{(int)ClientPackets.publicMessageReceived, ServerHandle.MessageReceived },
-				{(int)ClientPackets.playFabIdSent, ServerHandle.ClientPlayFabIDRecieved }
+				{(int)ClientPackets.playFabIdSent, ServerHandle.ClientPlayFabIDRecieved },
+				{(int)ClientPackets.friendRequestSendFrom, ServerHandle.ClientAddFriendRequest },
 			};
 
 			for (int i = 1; i <= MaxPlayers; i++)

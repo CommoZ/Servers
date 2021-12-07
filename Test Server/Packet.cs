@@ -11,7 +11,8 @@ namespace Test_Server
     {
         welcome = 1,
         udpTest,
-        publicMessageSent
+        publicMessageSent,
+        friendRequestSendTo,
     }
 
     /// <summary>Sent from client to server.</summary>
@@ -21,7 +22,8 @@ namespace Test_Server
         //disconnectRecieved,
         udpTestReceived,
         publicMessageReceived,
-        playFabIdSent
+        playFabIdSent,
+        friendRequestSendFrom,
     }
 
     public class Packet : IDisposable
