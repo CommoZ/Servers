@@ -111,7 +111,7 @@ namespace Test_Server
 				}
 				//Console.WriteLine($"Current ID in for loop: {Server.playFabIDArray[i]}");
 			}
-			Console.WriteLine($"Player of ID {_playFabIDToAdd} is not online");
+			//Console.WriteLine($"Player of ID {_playFabIDToAdd} is not online");
 
 
 		}
