@@ -13,6 +13,8 @@ namespace Test_Server
         udpTest,
         publicMessageSent,
         friendRequestSendTo,
+        friendAcceptedSendTo,
+        friendDeclinedSendTo,
     }
 
     /// <summary>Sent from client to server.</summary>
@@ -24,6 +26,8 @@ namespace Test_Server
         publicMessageReceived,
         playFabIdSent,
         friendRequestSendFrom,
+        friendAccepted,
+        friendDeclined,
     }
 
     public class Packet : IDisposable

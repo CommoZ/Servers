@@ -116,7 +116,64 @@ namespace Test_Server
 
 		}
 
+		public static void ClientAddFriendAccept(int _fromClient, Packet _packet)
+		{
+			int _clientId = _packet.ReadInt();
+			string _playFabIDToAdd = _packet.ReadString();
 
+			Console.WriteLine($"Friend request accepted from {Server.playFabUsernameArray[_clientId]}" +
+				$"\nPlayerID to add {_playFabIDToAdd} ");
+
+			for (int i = 0; i <= Server.MaxPlayers; i++)
+			{
+				if (Server.playFabIDArray[i] == null)
+					continue;
+				else
+					Console.WriteLine($"This slot has an ID and it is {Server.playFabIDArray[i]}");
+				if (_fromClient == i)
+				{
+					ServerSend.SendFriendAccept(_fromClient, i);
+
+				}
+				if (_playFabIDToAdd == Server.playFabIDArray[i])
+				{
+					//TODO: send a friend request
+					ServerSend.SendFriendAccept(i, _clientId);
+					
+					Console.WriteLine($"Player of ID {_playFabIDToAdd} has been sent Friend Acceptance message");
+					break;
+				}
+				
+			}
+
+		}
+
+		public static void ClientAddFriendDeclined (int _fromClient, Packet _packet)
+		{
+			int _clientId = _packet.ReadInt();
+			string _playFabIDToAdd = _packet.ReadString();
+
+			Console.WriteLine($"Friend request declined from {Server.playFabUsernameArray[_clientId]}" +
+				$"\nPlayerID to add {_playFabIDToAdd} ");
+
+			for (int i = 0; i <= Server.MaxPlayers; i++)
+			{
+				if (Server.playFabIDArray[i] == null)
+					continue;
+				else
+					Console.WriteLine($"This slot has an ID and it is {Server.playFabIDArray[i]}");
+				if (_playFabIDToAdd == Server.playFabIDArray[i])
+				{
+					//TODO: send a friend request
+					ServerSend.SendFriendDeclined(i, _clientId);
+
+					Console.WriteLine($"Player of ID {_playFabIDToAdd} has been sent Friend Declined message");
+					break;
+				}
+			}
+
+
+		}
 
 
 	}

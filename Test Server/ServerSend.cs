@@ -115,7 +115,7 @@ namespace Test_Server
 				SendTCPDataToAll(_toClient ,_packet);
 			}
 		}
-
+		
 		public static void SendFriendRequest(int _toClient, int _fromClient)
 		{
 			using (Packet _packet = new Packet((int)ServerPackets.friendRequestSendTo))
@@ -128,6 +128,33 @@ namespace Test_Server
 				SendTCPDataToOne(_toClient, _packet);
 			}
 		}
+
+		public static void SendFriendAccept(int _toClient, int _fromClient)
+		{
+			using (Packet _packet = new Packet((int)ServerPackets.friendAcceptedSendTo))
+			{
+				_packet.Write(Server.playFabIDArray[_fromClient]);          // this is to send which player its from
+				_packet.Write(Server.playFabUsernameArray[_fromClient]);    // this is just his username
+
+
+
+				SendTCPDataToOne(_toClient, _packet);
+			}
+		}
+
+		public static void SendFriendDeclined(int _toClient, int _fromClient)
+		{
+			using (Packet _packet = new Packet((int)ServerPackets.friendDeclinedSendTo))
+			{
+				_packet.Write(Server.playFabIDArray[_fromClient]);          // this is to send which player its from
+				_packet.Write(Server.playFabUsernameArray[_fromClient]);    // this is just his username
+
+
+
+				SendTCPDataToOne(_toClient, _packet);
+			}
+		}
+
 
 		#endregion
 	}

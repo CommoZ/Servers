@@ -138,6 +138,8 @@ namespace Test_Server
 				{(int)ClientPackets.publicMessageReceived, ServerHandle.MessageReceived },
 				{(int)ClientPackets.playFabIdSent, ServerHandle.ClientPlayFabIDRecieved },
 				{(int)ClientPackets.friendRequestSendFrom, ServerHandle.ClientAddFriendRequest },
+				{(int)ClientPackets.friendAccepted, ServerHandle.ClientAddFriendAccept },
+				{(int)ClientPackets.friendDeclined, ServerHandle.ClientAddFriendDeclined },
 			};
 
 			for (int i = 1; i <= MaxPlayers; i++)
